@@ -16,24 +16,24 @@
 - **安全细节**：按文件头魔数识别真实图片类型（不信任扩展名与 Content-Type）；所有资源按用户归属校验，他人资源统一返回 404；会话 token 只存哈希；文件响应带 `nosniff` 与 `CSP: sandbox`。
 - **工程交付**：Docker Compose 一键启动（含 MySQL 与初始化数据）；GitHub Actions 已通过；后端 30 个、前端 21 个自动化测试；另在真实 MySQL 与浏览器中做了端到端验证（见[验证情况](#验证情况)）。
 
-## 需求对照
+## 功能概览
 
-| 编号 | 实现方式 | 主要位置 |
+| 功能 | 实现方式 | 主要位置 |
 | --- | --- | --- |
-| R-01 技术栈与职责 | Next.js App Router + React + TS；Spring Boot + MyBatis + MySQL。Next.js 只做页面与 `/api` 转发，业务与持久化全部在 Java | `frontend/next.config.ts`、`backend/` |
-| R-02 列表与模拟数据 | 模板与分类由 Java 接口提供，Flyway 种子数据；分类筛选保存在 URL | `TemplateController`、`V2__seed.sql`、`TemplateBrowser.tsx` |
-| R-03 详情、上传与校验 | 按模板渲染上传位，支持选择/预览/替换/移除；前端预校验 + 服务端校验数量、魔数类型与大小；文件存于后端数据卷 | `UploadPanel.tsx`、`UploadService`、`TaskService.create` |
-| R-04 受理与异步执行 | 校验并建记录后返回 202，线程池后台执行，关闭页面不影响 | `TaskController`、`TaskDispatcher` |
-| R-05 多步骤状态与查询 | 三步顺序执行，每步独立落库；查询只读；终态不可逆 | `TaskPipeline`、`TaskStateService`、`task_steps` |
-| R-06 失败与模拟控制 | 开发接口或环境变量指定失败阶段与耗时，创建时快照进任务 | `DevSimulationController`、`SimulationSettings` |
-| R-07 状态表达与请求异常 | 区分上传中、提交中、等待、处理中、成功、失败；同步异常单独展示且可恢复 | `TaskCard.tsx`、`taskTracker.ts` |
-| R-08 多任务与查询生命周期 | 每任务独立轮询，终态停止，无待处理任务时无计时器；离开页面或切换用户时清理 | `taskTracker.ts`、`useTaskFeed.ts` |
-| R-09 刷新恢复与结果记录 | 刷新后从后端恢复并继续跟踪；个人记录页、结果预览 | `/history`、`TaskList.tsx` |
-| R-10 用户身份与个人记录 | 邮箱密码 + HttpOnly Cookie 会话，资源按用户归属隔离 | `auth/`、[用户身份与个人记录](#用户身份与个人记录) |
-| R-11 参考界面与交互 | 按 UI-01/02/03 布局实现深色界面；图标与上传按钮有可读标签、键盘焦点样式；窄屏单列 | `components/` |
-| R-12 CI 与关键测试 | GitHub Actions（前端 lint/类型检查/测试/构建，后端测试与构建）；覆盖步骤顺序、失败中断、多任务互不串扰、请求异常与任务失败的区分 | `.github/workflows/ci.yml`、`src/test`、`*.test.ts` |
-| R-13 提交材料与说明 | 本 README | — |
-| R-14 容器交付 | `docker compose up --build` 启动前端、后端、MySQL 及初始化数据 | `docker-compose.yml`、两个 `Dockerfile` |
+| 技术栈与分层 | Next.js App Router + React + TS；Spring Boot + MyBatis + MySQL。Next.js 只做页面与 `/api` 转发，业务与持久化全部在 Java | `frontend/next.config.ts`、`backend/` |
+| 模板列表与分类 | 模板与分类由 Java 接口提供，Flyway 种子数据；分类筛选保存在 URL | `TemplateController`、`V2__seed.sql`、`TemplateBrowser.tsx` |
+| 模板详情与上传校验 | 按模板渲染上传位，支持选择/预览/替换/移除；前端预校验 + 服务端校验数量、魔数类型与大小；文件存于后端数据卷 | `UploadPanel.tsx`、`UploadService`、`TaskService.create` |
+| 任务受理与异步执行 | 校验并建记录后返回 202，线程池后台执行，关闭页面不影响 | `TaskController`、`TaskDispatcher` |
+| 多步骤状态与查询 | 三步顺序执行，每步独立落库；查询只读；终态不可逆 | `TaskPipeline`、`TaskStateService`、`task_steps` |
+| 失败注入与耗时控制 | 开发接口或环境变量指定失败阶段与耗时，创建时快照进任务 | `DevSimulationController`、`SimulationSettings` |
+| 前端状态与请求异常 | 区分上传中、提交中、等待、处理中、成功、失败；同步异常单独展示且可恢复 | `TaskCard.tsx`、`taskTracker.ts` |
+| 多任务状态跟踪 | 每任务独立轮询，终态停止，无待处理任务时无计时器；离开页面或切换用户时清理 | `taskTracker.ts`、`useTaskFeed.ts` |
+| 刷新恢复与历史记录 | 刷新后从后端恢复并继续跟踪；个人记录页、结果预览 | `/history`、`TaskList.tsx` |
+| 用户身份与个人记录 | 邮箱密码 + HttpOnly Cookie 会话，资源按用户归属隔离 | `auth/`、[用户身份与个人记录](#用户身份与个人记录) |
+| 界面与可访问性 | 参考设计稿布局实现深色界面；图标与上传按钮有可读标签、键盘焦点样式；窄屏单列 | `components/` |
+| CI 与自动化测试 | GitHub Actions（前端 lint/类型检查/测试/构建，后端测试与构建）；覆盖步骤顺序、失败中断、多任务互不串扰、请求异常与任务失败的区分 | `.github/workflows/ci.yml`、`src/test`、`*.test.ts` |
+| 项目文档 | 本 README | — |
+| 容器化部署 | `docker compose up --build` 启动前端、后端、MySQL 及初始化数据 | `docker-compose.yml`、两个 `Dockerfile` |
 
 ## 目录
 
@@ -460,7 +460,7 @@ PowerShell 可用 `Invoke-RestMethod ... -SessionVariable s` 登录，之后的�
 
 工作流：
 
-1. **拆解与决策**：逐条梳理 R-01 ~ R-14，确定身份方案（邮箱 + 密码 + HttpOnly Cookie 会话）、界面语言、交付形态，形成实施方案（数据表、接口、状态机、前端跟踪器规则、测试清单、交付物）。
+1. **拆解与决策**：逐条梳理需求，确定身份方案（邮箱 + 密码 + HttpOnly Cookie 会话）、界面语言、交付形态，形成实施方案（数据表、接口、状态机、前端跟踪器规则、测试清单、交付物）。
 2. **方案评审（写代码前）**：对方案做了三轮评审，依次关注设计是否合理或过度、细节是否足以避免实现偏差、框架层面的隐患，每轮都修订了方案。
 3. **分模块生成**：后端（认证 → 模板/上传 → 任务流水线）→ 前端（请求封装 → 跟踪器 → 页面）→ 交付物（Dockerfile、Compose、CI、README）。
 4. **验证与修正**：自动化测试、真实 MySQL 冒烟、浏览器端到端检查、GitHub Actions；最后对照方案逐项核查完成度。
