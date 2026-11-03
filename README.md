@@ -1,6 +1,6 @@
 # 素材工坊：素材制作网站（全栈笔试题）
 
-[![CI](https://github.com/yyk230/xiaoying_bishi3/actions/workflows/ci.yml/badge.svg)](https://github.com/yyk230/xiaoying_bishi3/actions/workflows/ci.yml)
+[![CI](https://github.com/yyk230/material-studio/actions/workflows/ci.yml/badge.svg)](https://github.com/yyk230/material-studio/actions/workflows/ci.yml)
 
 用户浏览模板、上传图片并提交制作任务；任务在 Java 后台按“素材检查 → 模拟生成 → 结果整理”三步异步执行，用户可继续使用网站，随时在个人记录中查看状态与结果。制作不调用真实 AI，由可控耗时与可控失败的模拟流水线完成业务闭环。
 
