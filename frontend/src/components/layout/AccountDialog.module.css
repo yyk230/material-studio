@@ -1,0 +1,92 @@
+.dialog {
+  width: min(420px, calc(100vw - 32px));
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--panel);
+  color: var(--text);
+}
+
+.dialog::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.head h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.close {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: var(--panel-2);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.card {
+  padding: 16px;
+  border-radius: var(--radius);
+  background: var(--panel-2);
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #6f8b16;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.fields {
+  margin: 14px 0 0;
+  display: grid;
+  gap: 12px;
+}
+
+.fields dt {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.fields dd {
+  margin: 2px 0 0;
+  word-break: break-all;
+}
+
+.logout {
+  width: 100%;
+  margin-top: 16px;
+  color: var(--danger);
+}

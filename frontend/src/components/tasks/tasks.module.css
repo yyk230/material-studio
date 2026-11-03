@@ -1,0 +1,231 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: var(--radius);
+  background: var(--panel-2);
+  overflow: hidden;
+}
+
+.media {
+  aspect-ratio: 3 / 4;
+  background: #141418;
+}
+
+.resultButton {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: zoom-in;
+}
+
+.result {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 16px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.placeholderFailed {
+  color: var(--danger);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px 12px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.time {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.templateLink {
+  font-weight: 600;
+}
+
+.templateLink:hover {
+  text-decoration: underline;
+}
+
+.badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge_PENDING {
+  background: rgba(154, 154, 166, 0.18);
+  color: #c7c7d1;
+}
+
+.badge_PROCESSING {
+  background: rgba(108, 99, 255, 0.2);
+  color: #b3adff;
+}
+
+.badge_SUCCEEDED {
+  background: rgba(95, 214, 138, 0.16);
+  color: var(--success);
+}
+
+.badge_FAILED {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.stages {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.stageBar {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+}
+
+.stageName {
+  color: var(--text);
+}
+
+.stage_RUNNING .stageBar {
+  background: linear-gradient(90deg, #6c63ff, #b3adff, #6c63ff);
+  background-size: 200% 100%;
+  animation: flow 1.2s linear infinite;
+}
+
+.stage_SUCCEEDED .stageBar {
+  background: var(--success);
+}
+
+.stage_FAILED .stageBar {
+  background: var(--danger);
+}
+
+.stage_FAILED .stageState {
+  color: var(--danger);
+}
+
+.stage_SKIPPED {
+  opacity: 0.6;
+}
+
+@keyframes flow {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.failReason {
+  margin: 0;
+  font-size: 12px;
+  color: var(--danger);
+}
+
+.syncWarning {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: var(--warning-bg);
+  color: var(--warning);
+  font-size: 12px;
+}
+
+.syncWarning :global(.btn) {
+  min-height: 28px;
+  padding: 0 10px;
+}
+
+.more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+}
+
+.moreError {
+  color: var(--danger);
+  font-size: 12px;
+}
+
+.previewDialog {
+  max-width: min(92vw, 720px);
+  padding: 0;
+  border: none;
+  border-radius: 16px;
+  background: #000;
+  overflow: visible;
+}
+
+.previewDialog::backdrop {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.previewImage {
+  max-width: 100%;
+  max-height: 86vh;
+  border-radius: 16px;
+}
+
+.previewClose {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}

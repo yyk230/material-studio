@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="640" viewBox="0 0 480 640">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a1887f"/><stop offset="1" stop-color="#3e2723"/></linearGradient></defs>
+<rect width="480" height="640" fill="url(#g)"/>
+<rect x="80" y="120" width="320" height="360" fill="none" stroke="#ffcc80" stroke-width="18"/><ellipse cx="240" cy="300" rx="100" ry="120" fill="#fff" opacity=".35"/>
+<rect x="12" y="12" width="456" height="616" rx="20" fill="none" stroke="#fff" stroke-width="4" opacity=".7"/>
+<rect x="150" y="36" width="180" height="40" rx="20" fill="#000" opacity=".45"/><text x="240" y="63" text-anchor="middle" font-size="20" fill="#fff">模拟结果</text>
+<text x="240" y="560" text-anchor="middle" font-size="44" font-weight="700" fill="#fff" font-family="sans-serif">宠物油画像</text>
+</svg>

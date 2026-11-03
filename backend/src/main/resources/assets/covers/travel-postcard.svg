@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="640" viewBox="0 0 480 640">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b5876"/><stop offset="1" stop-color="#4e4376"/></linearGradient></defs>
+<rect width="480" height="640" fill="url(#g)"/>
+<polygon points="40,470 180,260 300,470" fill="#fff" opacity=".35"/><polygon points="160,470 320,220 450,470" fill="#fff" opacity=".5"/><circle cx="370" cy="150" r="42" fill="#ffe082" opacity=".9"/>
+
+<rect x="24" y="24" width="108" height="36" rx="18" fill="#000" opacity=".35"/><text x="38" y="48" font-size="18" fill="#fff">创意图片</text>
+
+</svg>

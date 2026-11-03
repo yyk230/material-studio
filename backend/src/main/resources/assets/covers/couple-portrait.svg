@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="640" viewBox="0 0 480 640">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c94b4b"/><stop offset="1" stop-color="#4b134f"/></linearGradient></defs>
+<rect width="480" height="640" fill="url(#g)"/>
+<path d="M170 300 C 110 240, 110 170, 170 170 C 200 170, 215 190, 220 210 C 225 190, 240 170, 270 170 C 330 170, 330 240, 270 300 L 220 350 Z" fill="#fff" opacity=".7"/><path d="M260 380 C 220 340, 220 290, 260 290 C 280 290, 290 302, 293 315 C 296 302, 306 290, 326 290 C 366 290, 366 340, 326 380 L 293 412 Z" fill="#fff" opacity=".5"/>
+
+<rect x="24" y="24" width="108" height="36" rx="18" fill="#000" opacity=".35"/><text x="38" y="48" font-size="18" fill="#fff">写真婚礼</text>
+
+</svg>

@@ -1,0 +1,11 @@
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 4px 0 16px;
+}
+
+.head h1 {
+  margin: 0;
+  font-size: 22px;
+}

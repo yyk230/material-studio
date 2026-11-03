@@ -1,0 +1,52 @@
+services:
+  mysql:
+    image: mysql:8.0
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    environment:
+      MYSQL_DATABASE: studio
+      MYSQL_USER: studio
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-studio_pass}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_pass}
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+
+  backend:
+    build: ./backend
+    depends_on:
+      mysql:
+        condition: service_healthy
+    # MySQL 首次初始化时健康检查可能早于真正就绪，连接失败后自动重启
+    restart: on-failure
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/studio?useUnicode=true&characterEncoding=utf8&connectionTimeZone=UTC
+      SPRING_DATASOURCE_USERNAME: studio
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD:-studio_pass}
+      APP_STORAGE_ROOT: /data/storage
+      APP_DEV_API_ENABLED: "true"
+      APP_SIMULATION_STEP_DELAY_MS: ${APP_SIMULATION_STEP_DELAY_MS:-3000}
+      APP_TASK_WORKER_THREADS: ${APP_TASK_WORKER_THREADS:-2}
+    volumes:
+      - storage-data:/data/storage
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        BACKEND_URL: http://backend:8080
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+
+volumes:
+  mysql-data:
+  storage-data:

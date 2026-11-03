@@ -1,0 +1,46 @@
+server:
+  port: 8080
+  tomcat:
+    # 默认 2MB：超过后 Tomcat 直接断开连接，客户端拿不到 413 响应
+    max-swallow-size: 20MB
+
+spring:
+  application:
+    name: studio-backend
+  datasource:
+    url: jdbc:mysql://localhost:3307/studio?useUnicode=true&characterEncoding=utf8&connectionTimeZone=UTC
+    username: studio
+    password: studio_pass
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  web:
+    resources:
+      add-mappings: false
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+app:
+  storage:
+    root: ./data/storage
+  auth:
+    session-ttl: 7d
+    cookie-secure: false
+  task:
+    worker-threads: 2
+    queue-capacity: 100
+  simulation:
+    step-delay-ms: 3000
+    fail-stage:
+  dev-api:
+    enabled: false
+
+logging:
+  level:
+    com.example.studio: INFO
